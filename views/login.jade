@@ -14,11 +14,13 @@ html
 
             function handleAuthResult(authResult) {
                 if (authResult && !authResult.error) {
-                    var request = gapi.client.plus.people.get({
-                        'userid': 'me',
+                    gapi.client.load('plus', 'v1', function() {
+                        var request = gapi.client.plus.people.get({
+                            'userid': 'me',
+                        });
+                        //execute the request
+                        request.execute(handleResponse);
                     });
-                    //execute the request
-                    request.execute(handleResponse);
                 }
             }
 
