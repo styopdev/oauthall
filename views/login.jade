@@ -14,6 +14,8 @@ html
 
             function handleAuthResult(authResult) {
                 if (authResult && !authResult.error) {
+                    console.log(authResult);
+
                     gapi.client.load('plus', 'v1', function() {
                         var request = gapi.client.plus.people.get({
                             'userid': 'me',
