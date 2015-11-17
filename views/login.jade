@@ -95,7 +95,6 @@ html
                 display:inline;
                 background-image:url("https://developers.google.com/accounts/images/sign-in-with-google.png");
             }
-
     body
         div.left
             h2 With Passport & Refresh
@@ -109,5 +108,5 @@ html
             fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
                 |   Login with Facebook
             br
-            a#authorize-button(onclick='handleAuthClick()')            a
+            a#authorize-button(onclick='handleAuthClick()')
                 |    Login Google +
