@@ -119,13 +119,6 @@ html
             }
     body
         div.left
-            h2 With Passport & Refresh
-            a(href="/login/twitter") Log In with Twitter
-            br
-            a(href="/auth/google") Log In with G+
-            br
-            a(href="/auth/facebook") Log In with FB
-        div.right
             h2 pure JS
             a#twitter-sign-in
             fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
@@ -133,3 +126,10 @@ html
             br
             a#authorize-button(onclick='handleAuthClick()')
             div#profile-info
+        div.right
+            h2 With Passport & Refresh
+            a(href="/login/twitter") Log In with Twitter
+            br
+            a(href="/auth/google") Log In with G+
+            br
+            a(href="/auth/facebook") Log In with FB
