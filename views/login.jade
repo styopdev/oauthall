@@ -18,7 +18,7 @@ html
 
                     gapi.client.load('plus', 'v1', function() {
                         var request = gapi.client.plus.people.get({
-                            'userid': 'me',
+                            'userId': 'me'
                         });
                         //execute the request
                         request.execute(handleResponse);
