@@ -14,7 +14,7 @@ var Strategy = require('passport-twitter').Strategy;
 passport.use(new Strategy({
     consumerKey: "5QUoJc5SW5P5flcf7SA28PS0m",
     consumerSecret: "oa2V4gmlGlhJVih6ZMDEPl0Cu0syJZJvNCqXYWPA2UGfTHcZtw",
-    callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
+    callbackURL: 'http://oauthall.herokuapp.com/login/twitter/return'
   },
   function(token, tokenSecret, profile, cb) {
     // In this example, the user's Twitter profile is supplied as the user
@@ -90,4 +90,4 @@ app.get('/profile',
     res.render('profile', { user: req.user });
   });
 
-app.listen(3000);
+app.listen(process.env.PORT);
