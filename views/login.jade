@@ -51,15 +51,15 @@ html
                 }
             }
 
-            /*function checkLoginState() {
+            function checkLoginState() {
                 FB.getLoginStatus(function (response) {
                     statusChangeCallback(response);
                 });
-            }*/
+            }
 
             window.fbAsyncInit = function () {
                 FB.init({
-                    appId: '',
+                    appId: '866430853477178',
                     cookie: true,  // enable cookies to allow the server to access
                                    // the session
                     xfbml: true,  // parse social plugins on this page
@@ -106,7 +106,7 @@ html
             a(href="/auth/facebook") Log In with FB
         div.right
             h2 pure Js
-            fb:login-button#fb-native(scope='public_profile,email')
+            fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
                 |   Login with Facebook
             br
             a#authorize-button(onclick='handleAuthClick()')            a
