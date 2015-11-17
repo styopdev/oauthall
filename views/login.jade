@@ -51,11 +51,11 @@ html
                 }
             }
 
-            function checkLoginState() {
+            /*function checkLoginState() {
                 FB.getLoginStatus(function (response) {
                     statusChangeCallback(response);
                 });
-            }
+            }*/
 
             window.fbAsyncInit = function () {
                 FB.init({
@@ -106,7 +106,7 @@ html
             a(href="/auth/facebook") Log In with FB
         div.right
             h2 pure Js
-            fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
+            fb:login-button#fb-native(scope='public_profile,email')
                 |   Login with Facebook
             br
             a#authorize-button(onclick='handleAuthClick()')            a
