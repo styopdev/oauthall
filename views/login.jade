@@ -27,7 +27,7 @@ html
             }
 
             function handleResponse(resp) {
-                console.log(resp);
+                document.getElementById("#profile-info").innerHTML = JSON.stringify(resp);
             }
 
             function handleAuthClick() {
@@ -86,7 +86,7 @@ html
             function testAPI() {
                 FB.api('/me', function (response) {
                     if (response.name) {
-                        console.log(response);
+                        document.getElementById("#profile-info").innerHTML = JSON.stringify(response);
                     }
                 });
             }
@@ -103,6 +103,20 @@ html
                 background-size: 100%;
                 background-image:url("https://developers.google.com/accounts/images/sign-in-with-google.png");
             }
+            #twitter-sign-in {
+                width: 140px;
+                cursor: pointer;
+                height: 25px;
+                display: block;
+                margin-bottom: 5px;
+                -webkit-background-size:;
+                background-size:100%;
+                background-image: url("https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png");
+            }
+            #profile-info {
+                width: 60%;
+                height: 300px;
+            }
     body
         div.left
             h2 With Passport & Refresh
@@ -112,8 +126,10 @@ html
             br
             a(href="/auth/facebook") Log In with FB
         div.right
-            h2 pure Js
+            h2 pure JS
+            a#twitter-sign-in
             fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
                 |   Login with Facebook
             br
             a#authorize-button(onclick='handleAuthClick()')
+            div#profile-info
