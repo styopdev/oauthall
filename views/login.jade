@@ -27,7 +27,7 @@ html
             }
 
             function handleResponse(resp) {
-                document.getElementById("#profile-info").innerHTML = JSON.stringify(resp);
+                document.getElementById("profile-info").innerHTML = JSON.stringify(resp);
             }
 
             function handleAuthClick() {
@@ -86,7 +86,7 @@ html
             function testAPI() {
                 FB.api('/me', function (response) {
                     if (response.name) {
-                        document.getElementById("#profile-info").innerHTML = JSON.stringify(response);
+                        document.getElementById("profile-info").innerHTML = JSON.stringify(response);
                     }
                 });
             }
