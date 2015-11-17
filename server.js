@@ -2,7 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var twitterStrategy = require('passport-twitter').Strategy;
 var facebookStrategy = require('passport-facebook').Strategy;
-var googleStrategy = require('passport-google-plus');
+var googleStrategy  = require('passport-google-oauth2').Strategy;
 
 // Configure the Twitter strategy for use by Passport.
 //
@@ -33,22 +33,30 @@ passport.use(new facebookStrategy({
         enableProof: false
     },
     function (accessToken, refreshToken, profile, cb) {
-        //User.findOrCreate({facebookId: profile.id}, function (err, user) {
-            return cb(null, profile);
-        //});
+        return cb(null, profile);
     }
 ));
 
 
-// Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  In a
-// production-quality application, this would typically be as simple as
-// supplying the user ID when serializing, and querying the user record by ID
-// from the database when deserializing.  However, due to the fact that this
-// example does not have a database, the complete Twitter profile is serialized
-// and deserialized.
+
+passport.use(new googleStrategy({
+        clientID: '745627039266-tbe8rvv1mg34cquv1t4g428fedahnd2k.apps.googleusercontent.com',
+        clientSecret: 'piTY8LGCI-JsJQFkoiDp-UHj',
+        callbackURL: "http://oauthall.herokuapp.com/auth/google/callback",
+        passReqToCallback   : true
+    },
+    function(request, accessToken, refreshToken, profile, done) {
+        // asynchronous verification, for effect...
+        process.nextTick(function () {
+
+            // To keep the example simple, the user's Google profile is returned to
+            // represent the logged-in user.  In a typical application, you would want
+            // to associate the Google account with a user record in your database,
+            // and return that user instead.
+            return done(null, profile);
+        });
+    }
+));
 
 passport.serializeUser(function (user, cb) {
     cb(null, user);
@@ -109,15 +117,28 @@ app.get('/login/twitter/return',
 // FACEBOOK METHODS
 app.get('/auth/facebook',
     passport.authenticate('facebook'),
-    function(req, res){
+    function (req, res) {
         // The request will be redirected to Facebook for authentication, so this
         // function will not be called.
     });
 
 app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
+    passport.authenticate('facebook', {failureRedirect: '/login'}),
+    function (req, res) {
         res.redirect('/');
     });
+
+// GOOGLE PLUS
+app.get( '/auth/google/callback',
+    passport.authenticate( 'google', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }));
+
+app.get('/auth/google', passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read']
+}));
+
 
 app.listen(process.env.PORT);
