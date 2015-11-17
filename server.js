@@ -21,7 +21,9 @@ passport.use(new twitterStrategy({
         // In this example, the user's Twitter profile is supplied as the user
         // record.  In a production-quality application, the Twitter profile should
         // be associated with a user record in the application's database, which
-        // allows for account linking and authentication with other identity
+        // allows for account linking
+        //
+        // and authentication with other identity
         // providers.
         return cb(null, profile);
     }));
@@ -49,10 +51,6 @@ passport.use(new googleStrategy({
         // asynchronous verification, for effect...
         process.nextTick(function () {
 
-            // To keep the example simple, the user's Google profile is returned to
-            // represent the logged-in user.  In a typical application, you would want
-            // to associate the Google account with a user record in your database,
-            // and return that user instead.
             return done(null, profile);
         });
     }
@@ -129,7 +127,7 @@ app.get('/auth/facebook/callback',
     });
 
 // GOOGLE PLUS
-app.get( '/auth/google/callback',
+app.get('/auth/google/callback',
     passport.authenticate( 'google', {
         successRedirect: '/',
         failureRedirect: '/login'
