@@ -32,7 +32,7 @@ passport.use(new facebookStrategy({
         callbackURL: "http://oauthall.herokuapp.com/auth/facebook/callback",
         enableProof: false
     },
-    function (accessToken, refreshToken, profile, done) {
+    function (accessToken, refreshToken, profile, cb) {
         //User.findOrCreate({facebookId: profile.id}, function (err, user) {
             return cb(null, profile);
         //});
