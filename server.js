@@ -10,6 +10,7 @@ var Strategy = require('passport-twitter').Strategy;
 // user's behalf, along with the user's profile.  The function must invoke `cb`
 // with a user object, which will be set at `req.user` in route handlers after
 // authentication.
+
 passport.use(new Strategy({
     consumerKey: "5QUoJc5SW5P5flcf7SA28PS0m",
     consumerSecret: "oa2V4gmlGlhJVih6ZMDEPl0Cu0syJZJvNCqXYWPA2UGfTHcZtw",
