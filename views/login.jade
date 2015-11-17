@@ -1,5 +1,113 @@
-a(href="/login/twitter") Log In with Twitter
-br
-a(href="/auth/google") Log In with G+
-br
-a(href="/auth/facebook") Log In with FB
+html
+    head
+        script(type="text/javascript", src="http://apis.google.com/js/client.js?onload=handleClientLoad", gapi_processed="true")
+        // google plus script
+        script(type="text/javascript").
+            var clientId = '745627039266-tbe8rvv1mg34cquv1t4g428fedahnd2k.apps.googleusercontent.com';
+            var apiKey = 'piTY8LGCI-JsJQFkoiDp-UHj';
+            var scopes = 'https://www.googleapis.com/auth/contacts.readonly';
+            var token = null;
+
+            function handleClientLoad() {
+                gapi.client.setApiKey(apiKey);
+            }
+
+            function handleAuthResult(authResult) {
+                if (authResult && !authResult.error) {
+                    var request = gapi.client.plus.people.get({
+                        'userid': 'me',
+                    });
+                    //execute the request
+                    request.execute(handleResponse);
+                }
+            }
+
+            function handleResponse(resp) {
+                console.log(resp);
+            }
+
+            function handleAuthClick() {
+                gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+                return false;
+            }
+        // Fb script
+        script(type="text/javascript").
+            function statusChangeCallback(response) {
+                // The response object is returned with a status field that lets the
+                // app know the current login status of the person.
+                // Full docs on the response object can be found in the documentation
+                // for FB.getLoginStatus().
+                if (response.status === 'connected') {
+                    // Logged into your app and Facebook.
+                    testAPI(response);
+                } else if (response.status === 'not_authorized') {
+                    // The person is logged into Facebook, but not your app.
+                    console.log("Not Authorized");
+                } else {
+                    // The person is not logged into Facebook, so we're not sure if
+                    // they are logged into this app or not.
+
+                    console.log('Please log into Facebook.');
+                }
+            }
+
+            function checkLoginState() {
+                FB.getLoginStatus(function (response) {
+                    statusChangeCallback(response);
+                });
+            }
+
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '',
+                    cookie: true,  // enable cookies to allow the server to access
+                                   // the session
+                    xfbml: true,  // parse social plugins on this page
+                    version: 'v2.2' // use version 2.2
+                });
+            };
+
+            // Load the SDK asynchronously
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            // Here we run a very simple test of the Graph API after login is
+            // successful.  See statusChangeCallback() for when this call is made.
+            function testAPI() {
+                FB.api('/me', function (response) {
+                    if (response.name) {
+                        console.log(response);
+                    }
+                });
+            }
+        style(type="text/css").
+            .left, .right {
+                width: 50%;
+                display: inline-block;
+            }
+            #authorize-button {
+                display:inline;
+                background-image:url("https://developers.google.com/accounts/images/sign-in-with-google.png");
+            }
+
+    body
+        div.left
+            h2 With Passport & Refresh
+            a(href="/login/twitter") Log In with Twitter
+            br
+            a(href="/auth/google") Log In with G+
+            br
+            a(href="/auth/facebook") Log In with FB
+        div.right
+            h2 only JS
+            fb:login-button#fb-native(scope='public_profile,email', onlogin='checkLoginState();')
+                |   Login with Facebook
+            br
+            a#authorize-button(onclick='handleAuthClick()')            a
+                |    Login Google +
