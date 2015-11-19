@@ -2,9 +2,10 @@ var express = require('express');
 var passport = require('passport');
 var twitterStrategy = require('passport-twitter').Strategy;
 var facebookStrategy = require('passport-facebook').Strategy;
-var googleStrategy  = require('passport-google-oauth2').Strategy;
+var googleStrategy = require('passport-google-oauth2').Strategy;
+var request = require("request");
 
-// Configure the Twitter strategy for use by Passport.
+// Configure the Twitter strategy for use by Passport.test
 //
 // OAuth 1.0-based strategies require a `verify` function which receives the
 // credentials (`token` and `tokenSecret`) for accessing the Twitter API on the
@@ -137,6 +138,11 @@ app.get('/auth/google', passport.authenticate('google', { scope: [
     'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/plus.profile.emails.read']
 }));
+
+// Twitter js
+app.get("/request-token", function(req, res, next) {
+    request.post({ url: 'http://localhost/test2.php', body : "oauth_callback=http://oauthall.herokuapp.com/tw-callback"});
+});
 
 
 app.listen(process.env.PORT || 3000);
